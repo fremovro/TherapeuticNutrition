@@ -1,7 +1,10 @@
-{{page-title "TherapeuticNutrition"}}
-
-{{! The following component displays Ember's default welcome message. }}
-<WelcomePage />
-{{! Feel free to remove this! }}
-
-{{outlet}}
+<div class="head shadow-high">
+    <button class="button authorization-button text" type="button" {{on "click" (fn this.redirect "authorization")}}>Личный кабинет пациента</button>
+    <button class="button authorization-button text" type="button" >Дневник питания</button>
+    <button class="button authorization-button text" type="button" >Рецепты</button>
+    <button class="button authorization-button text" type="button" >Продукты</button>
+    <button class="button authorization-button text" type="button" >Аллергены</button>
+</div>
+<div class="body">
+    {{outlet}}
+</div>

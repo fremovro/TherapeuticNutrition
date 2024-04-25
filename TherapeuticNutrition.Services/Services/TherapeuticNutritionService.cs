@@ -1,8 +1,8 @@
 ﻿using Domain.Core.Interfaces;
 using Domain.Core.Models;
-using TherapeuticNutrition.Services.Interfaces;
+using Domain.Services.Interfaces;
 
-namespace TherapeuticNutrition.Services.Services
+namespace Domain.Services
 {
     public class TherapeuticNutritionService : ITherapeuticNutritionService
     {
@@ -16,6 +16,11 @@ namespace TherapeuticNutrition.Services.Services
         public async Task<List<Pacient>> GetAllPacients()
         {
             return await _therapeuticNutritionRepository.Get();
+        }
+
+        public async Task<Pacient> GetPacientByLogin(string login)
+        {
+            return await _therapeuticNutritionRepository.GetByLogin(login);
         }
     }
 }

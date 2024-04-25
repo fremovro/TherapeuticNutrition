@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Infrastructure.DataAccess.Entities
 {
@@ -11,8 +12,7 @@ namespace Infrastructure.DataAccess.Entities
         public string Password { get; set; } = string.Empty;
         public string Fio { get; set; } = string.Empty;
 
-
-        public string Analysis { get; set; } = string.Empty;
-        public string Сonclusion { get; set; } = string.Empty;
+        public string? Analysis { get; set; } = null;
+        public string? Сonclusion { get; set; } = null;
     }
 }
