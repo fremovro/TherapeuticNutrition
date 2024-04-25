@@ -18,7 +18,6 @@ namespace TherapeuticNutrition.Controllers
         {
             _therapeuticNutritionService = therapeuticNutritionService;
             _authorizationService = authorizationService;
-
         }
 
         [HttpGet]
@@ -32,7 +31,8 @@ namespace TherapeuticNutrition.Controllers
         [Route("get/pacient")]
         public async Task<ActionResult<Pacient>> GetPacient()
         {
-            if (Request.Cookies["token"] == null || Request.Cookies["login"] == null)
+            if (Request.Cookies["token"] == null 
+                || Request.Cookies["login"] == null)
             {
                 return Unauthorized("Необходимо авторизоваться");
             }
@@ -50,8 +50,17 @@ namespace TherapeuticNutrition.Controllers
             {
                 var token = await _authorizationService.Login(login, password);
 
-                Response.Cookies.Append("token", token);
-                Response.Cookies.Append("login", login);
+                var cookieOptions = new CookieOptions
+                {
+                    Path = "/",
+                    HttpOnly = false,
+                    Expires = DateTimeOffset.UtcNow.AddDays(1),
+                    IsEssential = true,
+                    SameSite = SameSiteMode.None,
+                    Secure = true
+                };
+                Response.Cookies.Append("token", token, cookieOptions);
+                Response.Cookies.Append("login", login, cookieOptions);
 
                 var pacient = await _therapeuticNutritionService.GetPacientByLogin(login);
                 return Results.Ok(pacient); 

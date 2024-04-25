@@ -1,6 +1,6 @@
 import Service from '@ember/service';
 
-export default class ProxyServiceService extends Service {
+export default class RestApiService extends Service {
     sendGetRequest = function (url) {
         return new Promise(function (resolve, reject) {
           let xhr = new XMLHttpRequest();
@@ -30,5 +30,5 @@ export default class ProxyServiceService extends Service {
             }
           }
         });
-    }
+    };
 }

@@ -101,8 +101,9 @@
   /* display: flex; */
   /* justify-content: center;
   align-items: center; */
-  top: 30%;
-  left: 35%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   height: 300px;
   width: 600px;
   border-radius: 15px;
@@ -132,6 +133,62 @@
       /* position: fixed; */
       margin-top: 30%;
     }
+  }
+}
+/* /////// */
+
+/* ЛИЧНЫЙ КАБИНЕТ */
+.desktop-widget {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-left: auto;
+  margin-right: auto;
+  height: 80%;
+  width: 80%;
+  border-radius: 15px;
+  background-color: #deba89;
+  .fio {
+    display: flex;
+    position: absolute;
+    border: solid #4d220e 2px;
+    top: 5%;
+    left: 5%;
+    height: 10%;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+  }
+  .relations-fields {
+    position: absolute;
+    height: 45%;
+    width: 90%;
+    border: solid #4d220e 2px;
+    top: 20%;
+    left: 5%;
+    .login {
+      margin-top: 27%;
+    }
+    .password {
+      margin-top: 30%;
+    }
+  }
+  .analysis-field {
+    position: absolute;
+    height: 10%;
+    width: 90%;
+    border: solid #4d220e 2px;
+    top: 70%;
+    left: 5%;
+  }
+  .conclusion-field {
+    position: absolute;
+    height: 10%;
+    width: 90%;
+    border: solid #4d220e 2px;
+    top: 85%;
+    left: 5%;
   }
 }
 /* /////// */
