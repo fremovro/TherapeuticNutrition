@@ -1,0 +1,27 @@
+<div class="authorization-widget shadow-high">
+    <div class="head text">Авторизация</div>
+    <div class="field">
+        <div class="login">
+            <label for="input-login" class="text">Логин:</label>
+            <Input class="text"
+                id="input-login"
+                @value={{this.login}}
+                disabled={{false}}
+                maxlength="12"
+            />
+        </div>
+    </div>
+    <div class="field">
+        <div class="password">
+            <label for="input-password" class="text">Пароль:</label>
+            <Input class="text"
+                id="input-password"
+                @value={{this.password}}
+                disabled={{false}}
+                maxlength="12"
+            />
+        </div>
+    </div>
+    <button class="button login-button shadow-easy text" type="button" {{on "click" this.authorization}} disabled={{this.disabledLoginButton}}>Войти</button>
+    <button class="button registry-button shadow-easy text" type="button">Регистрация</button>
+</div>

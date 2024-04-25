@@ -1,6 +1,6 @@
-@TherapeuticNutrition_HostAddress = http://localhost:5138
+@TherapeuticNutrition_HostAddress = https://localhost:7253
 
-GET {{TherapeuticNutrition_HostAddress}}/weatherforecast/
+GET {{TherapeuticNutrition_HostAddress}}/TherapeuticNutrition/get/pacient
 Accept: application/json
 
 ###

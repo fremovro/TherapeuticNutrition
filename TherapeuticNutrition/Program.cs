@@ -1,22 +1,38 @@
 using Domain.Core.Interfaces;
+using Domain.Services;
+using Domain.Services.Interfaces;
 using Infrastructure.DataAccess;
 using Infrastructure.DataAccess.Repositories;
+using Infrastructure.Services.Options;
+using Infrastructure.Services.Providers;
+using Infrastructure.Services.Services;
 using Microsoft.EntityFrameworkCore;
+using TherapeuticNutrition.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
+var configuration = builder.Configuration;
 
-// Add services to the container.
+builder.Services.AddCors();
+
+builder.Services.Configure<JwtOptions>(configuration.GetSection(nameof(JwtOptions)));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(typeof(DbMappings));
+
 builder.Services.AddDbContext<TherapeuticNutritionDbContext>(
     options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"), 
         b => b.MigrationsAssembly("TherapeuticNutrition")));
 
 builder.Services.AddScoped<ITherapeuticNutritionRepository, TherapeuticNutritionRepository>();
+//builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddScoped<ITherapeuticNutritionService, TherapeuticNutritionService>();
+builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
+builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 var app = builder.Build();
 
@@ -29,8 +45,18 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors(builder =>
+{
+    builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader();
+    //.AllowCredentials();
+});
 
 app.Run();

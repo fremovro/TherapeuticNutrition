@@ -3,11 +3,12 @@
     public class Pacient
     {
         private Pacient(Guid primarykey,
-            string login, string password, string analysis, string conclusion,
-            IEnumerable<Allergen> allergens, IEnumerable<Product> products, IEnumerable<Recipe> recipes)
+            string login, string fio, string password, string? analysis = null, string? conclusion = null,
+            IEnumerable<Allergen>? allergens = null, IEnumerable<Product>? products = null, IEnumerable<Recipe>? recipes = null)
         {
             Primarykey = primarykey;
             Login = login;
+            Fio = fio;
             Password = password;
             Analysis = analysis;
             Allergens = allergens;
@@ -25,13 +26,13 @@
         public string? Analysis { get; } = string.Empty;
         public string? Сonclusion { get; } = string.Empty;
 
-        public IEnumerable<Allergen> Allergens { get; }
-        public IEnumerable<Product> FavoriteProducts { get; }
-        public IEnumerable<Recipe> FavoriteRecipes { get; }
+        public IEnumerable<Allergen>? Allergens { get; }
+        public IEnumerable<Product>? FavoriteProducts { get; }
+        public IEnumerable<Recipe>? FavoriteRecipes { get; }
 
-        public static (Pacient pacient, string Error) Create (Guid primarykey,
-            string login, string password, string analysis, string conclusion,
-            IEnumerable<Allergen> allergens, IEnumerable<Product> products, IEnumerable<Recipe> recipes)
+        public static Pacient Create (Guid primarykey,
+            string login, string fio, string password, string? analysis = null, string? conclusion = null,
+            IEnumerable<Allergen>? allergens = null, IEnumerable<Product>? products = null, IEnumerable<Recipe>? recipes = null)
         {
             var error = string.Empty;
 
@@ -52,9 +53,9 @@
             //    error = "$Логин должен состоять из латинских букв и цифр";
             //}
 
-            var pacient = new Pacient(primarykey, login, password, analysis, conclusion, allergens, products, recipes);
+            var pacient = new Pacient(primarykey, login, fio, password, analysis, conclusion, allergens, products, recipes);
 
-            return (pacient, error);
+            return pacient;
         }
     }
 }
