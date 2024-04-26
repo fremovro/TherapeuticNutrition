@@ -23,7 +23,7 @@ namespace Domain.Services
         {
             var hashedPassword = _passwordHasher.Generate(password);
 
-            var pacient = Pacient.Create(Guid.NewGuid(), login, fio, hashedPassword, string.Empty, string.Empty,
+            var pacient = Pacient.CreatePacient(Guid.NewGuid(), login, fio, hashedPassword, string.Empty, string.Empty,
                 new List<Allergen>(), new List<Product>(), new List<Recipe>());
 
 
@@ -32,7 +32,7 @@ namespace Domain.Services
 
         public async Task<string> Login(string login, string password)
         {
-            var pacient = await _therapeuticNutritionRepository.GetByLogin(login);
+            var pacient = await _therapeuticNutritionRepository.GetPacientByLogin(login);
 
             var result = _passwordHasher.Verify(password, pacient.Password);
             if (result == false)

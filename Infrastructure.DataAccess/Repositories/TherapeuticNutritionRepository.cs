@@ -1,7 +1,9 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using AutoMapper;
 using Domain.Core.Interfaces;
 using Domain.Core.Models;
+using Infrastructure.DataAccess.Entities.Relations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repositories
@@ -17,13 +19,46 @@ namespace Infrastructure.DataAccess.Repositories
             _mapper = mapper;
         }
 
-        public async Task<List<Pacient>> Get()
+        public async Task<List<Pacient>> GetPacients()
         {
             var pacientEntities = await _context.Pacients
                 .AsNoTracking()
                 .ToListAsync();
 
             return new List<Pacient>();
+        }
+
+        public async Task<List<Allergen>> GetAllergens()
+        {
+            var allergenEntities = await _context.Allergens
+                .AsNoTracking()
+                .ToListAsync();
+            var allergens = allergenEntities
+                .Select(e => Allergen.CreateAllergen(e.Primarykey, e.Name, e.Reaction, e.DangerDegree))
+                .ToList();
+
+            return allergens;
+        }
+
+        public async Task<List<Allergen>> GetPacientAllergens(Guid pacientKey)
+        {
+            var pacientAllergens = await _context.PacientAllergens
+                .Where(e => e.Pacient == pacientKey)
+                .AsNoTracking()
+                .ToListAsync();
+
+            var pacientAllergenKeys = pacientAllergens
+                .Select(e => e.Allergen);
+            var allergenEntities = await _context.Allergens
+                .Where(e => pacientAllergenKeys.Contains(e.Primarykey))
+                .AsNoTracking()
+                .ToListAsync();
+
+            var allergens = allergenEntities
+                .Select(e => Allergen.CreateAllergen(e.Primarykey, e.Name, e.Reaction, e.DangerDegree))
+                .ToList();
+
+            return allergens;
         }
 
         public async Task Add(Pacient pacient)
@@ -41,14 +76,14 @@ namespace Infrastructure.DataAccess.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Pacient> GetByLogin(string login)
+        public async Task<Pacient> GetPacientByLogin(string login)
         {
             var pacientEnity = await _context.Pacients
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Login == login);
-            if (pacientEnity == null) { throw new Exception(); }
+            //if (pacientEnity == null) { throw new Exception(); }
 
-            var pacientModel = Pacient.Create(pacientEnity.Primarykey, pacientEnity.Login, 
+            var pacientModel = Pacient.CreatePacient(pacientEnity.Primarykey, pacientEnity.Login,
                 pacientEnity.Fio, pacientEnity.Password, pacientEnity.Analysis, pacientEnity.Сonclusion);
             return pacientModel;
         }

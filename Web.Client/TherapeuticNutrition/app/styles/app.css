@@ -55,22 +55,16 @@
 
 /* ТЕНИ */
 .shadow-high {
-  box-shadow: 10px 8px 20px #4d220e;
-  box-shadow: 10px 8px 20px #4d220e;
   box-shadow: 10px 8px 20px #2e1104;
   z-index: 10;
 }
 
 .shadow-middle {
-  box-shadow: 5px 4px 10px #4d220e;
-  box-shadow: 5px 4px 10px #4d220e;
   box-shadow: 5px 4px 10px #2e1104;
   z-index: 10;
 }
 
 .shadow-easy {
-  box-shadow: 1px 1px 3px #4d220e;
-  box-shadow: 1px 1px 3px #4d220e;
   box-shadow: 1px 1px 3px #2e1104;
   z-index: 10;
 }
@@ -203,7 +197,7 @@
 
 /* /////// */
 
-/* ЛИЧНЫЙ КАБИНЕТ */
+/* ОБЩИЕ ВИДЖЕТЫ */
 .desktop-widget {
   height: 80%;
   width: 80%;
@@ -344,6 +338,18 @@
       margin-left: 21%;
       padding-right: 1%;
     }
+  }
+
+  .left-panel {
+    position: absolute;
+    overflow-y: scroll;
+    height: 95%;
+    width: 30%;
+    border: solid #4d220e 2px;
+    top: 2.5%;
+    left: 2.5%;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
   }
 }
 

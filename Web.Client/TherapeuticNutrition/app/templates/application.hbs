@@ -3,7 +3,7 @@
     <button class="button authorization-button text" type="button" >Дневник питания</button>
     <button class="button authorization-button text" type="button" >Рецепты</button>
     <button class="button authorization-button text" type="button" >Продукты</button>
-    <button class="button authorization-button text" type="button" >Аллергены</button>
+    <button class="button authorization-button text" type="button" {{on "click" (fn this.redirect "allergens")}}>Аллергены</button>
 </div>
 <div class="body">
     {{outlet}}

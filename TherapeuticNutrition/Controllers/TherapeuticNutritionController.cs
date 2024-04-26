@@ -43,6 +43,21 @@ namespace TherapeuticNutrition.Controllers
         }
 
         [HttpGet]
+        [Route("get/allergens")]
+        public async Task<ActionResult<Pacient>> GetAllergens()
+        {
+            if (Request.Cookies["token"] == null
+                || Request.Cookies["login"] == null)
+            {
+                return Unauthorized("Необходимо авторизоваться");
+            }
+
+            var login = Request.Cookies["login"]?.ToString();
+            var allergens = await _therapeuticNutritionService.GetAllAllergens(login);
+            return Ok(allergens);
+        }
+
+        [HttpGet]
         [Route("login/login={login}&password={password}")]
         public async Task<IResult> Login(string login, string password)
         {
