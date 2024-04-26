@@ -11,6 +11,7 @@
             Fio = fio;
             Password = password;
             Analysis = analysis;
+            Conclusion = conclusion;
             Allergens = allergens;
             FavoriteProducts = products;
             FavoriteRecipes = recipes;
@@ -24,7 +25,7 @@
 
 
         public string? Analysis { get; } = string.Empty;
-        public string? Сonclusion { get; } = string.Empty;
+        public string? Conclusion { get; } = string.Empty;
 
         public IEnumerable<Allergen>? Allergens { get; }
         public IEnumerable<Product>? FavoriteProducts { get; }

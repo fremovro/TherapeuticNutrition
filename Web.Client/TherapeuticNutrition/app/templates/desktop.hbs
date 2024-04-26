@@ -1,14 +1,24 @@
-<div class="desktop-widget shadow-high">
-    <div class="fio text">
+<div class="desktop-widget center-container shadow-high">
+    <div class="fio center-content shadow-easy text">
         {{this.pacient.fio}}
     </div>
-    <div class="relations-fields">
-
+    <div class="relations shadow-easy">
+        <label class="allergens-label text center-content">Аллергены</label>
+        <div class="allergens shadow-easy">
+        </div>
+        <label class="favoriteProducts-label text center-content">Избранные продукты</label>
+        <div class="favoriteProducts shadow-easy">
+        </div>
+        <label class="favoriteRecipes-label text center-content">Избранные рецепты</label>
+        <div class="favoriteRecipes shadow-easy">
+        </div>
     </div>
-    <div class="analysis-field">
-        <label class="text">Заключение врача: </label>
+    <div class="analysis shadow-easy">
+        <label class="text label center-content">Результаты анализов:</label>
+        <div class="field text-easy">{{this.pacient.analysis}}</div>
     </div>
-    <div class="conclusion-field">
-        <label class="text"></label>
+    <div class="conclusion shadow-easy">
+        <label class="text label center-content">Заключение врача:</label>
+        <div class="field text-easy">{{this.pacient.conclusion}}</div>
     </div>
 </div>

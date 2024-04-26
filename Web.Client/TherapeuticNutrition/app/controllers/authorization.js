@@ -30,14 +30,20 @@ export default class AuthorizationController extends Controller {
   @action authorization() {
     var _this = this;
 
-    this.restApi.sendGetRequest('https://localhost:7253/TherapeuticNutrition/login/login=' + this.login + '&password=' + this.password)
+    this.restApi
+      .sendGetRequest(
+        'https://localhost:7253/TherapeuticNutrition/login/login=' +
+          this.login +
+          '&password=' +
+          this.password,
+      )
       .then(
         function (json) {
           _this.redirect('desktop');
         },
         function (reason) {
           // _this.controller.send('redirect', 'authorization');
-        }
+        },
       );
   }
 }

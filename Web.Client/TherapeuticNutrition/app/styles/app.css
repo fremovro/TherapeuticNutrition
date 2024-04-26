@@ -8,35 +8,6 @@
   box-shadow: 0 2px 10px rgb(0 0 0 / 25%);
 }
 
-/* ТЕНИ */
-.shadow-high {
-  box-shadow: 10px 8px 20px #4d220e;
-  -moz-box-shadow: 10px 8px 20px #4d220e;
-  -webkit-box-shadow: 10px 8px 20px #2e1104;
-  z-index: 10;
-}
-.shadow-middle {
-  box-shadow: 5px 4px 10px #4d220e;
-  -moz-box-shadow: 5px 4px 10px #4d220e;
-  -webkit-box-shadow: 5px 4px 10px #2e1104;
-  z-index: 10;
-}
-.shadow-easy {
-  box-shadow: 2px 2px 5px #4d220e;
-  -moz-box-shadow: 2px 2px 5px #4d220e;
-  -webkit-box-shadow: 2px 2px 5px #2e1104;
-  z-index: 10;
-}
-/* /////// */
-
-.text {
-  font:
-    1.2rem "Snell Roundhand",
-    cursive;
-  font-size: x-large;
-  color: #4d220e;
-}
-
 .body {
   position: absolute;
   top: 10%;
@@ -46,25 +17,108 @@
   background-image: url("/assets/images/body-font.jpg");
 }
 
+.center-container {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center-content {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* СКРОЛБАР */
+*::-webkit-scrollbar {
+  width: 10px;
+  padding: 10px;
+  background: #4d220e;
+}
+
+/* *::-webkit-scrollbar-track {
+  background: #4d220e;
+} */
+*::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  padding: 0 4px;
+  background-color: #deba89;
+  background-clip: content-box;
+  border: 4px solid transparent;
+}
+
+/* /////// */
+
+/* ТЕНИ */
+.shadow-high {
+  box-shadow: 10px 8px 20px #4d220e;
+  box-shadow: 10px 8px 20px #4d220e;
+  box-shadow: 10px 8px 20px #2e1104;
+  z-index: 10;
+}
+
+.shadow-middle {
+  box-shadow: 5px 4px 10px #4d220e;
+  box-shadow: 5px 4px 10px #4d220e;
+  box-shadow: 5px 4px 10px #2e1104;
+  z-index: 10;
+}
+
+.shadow-easy {
+  box-shadow: 1px 1px 3px #4d220e;
+  box-shadow: 1px 1px 3px #4d220e;
+  box-shadow: 1px 1px 3px #2e1104;
+  z-index: 10;
+}
+
+/* /////// */
+
+/* ТЕКСТ */
+.text {
+  font:
+    1.2rem "Snell Roundhand",
+    cursive;
+  font-size: x-large;
+  color: #4d220e;
+}
+
+.text-easy {
+  font:
+    1.2rem "Snell Roundhand",
+    cursive;
+  font-size: medium;
+  color: #4d220e;
+}
+
+/* /////// */
+
 /* КНОПКИ */
 .button {
   position: sticky;
   background-color: #deba89;
+
   &:disabled {
     background-color: gray !important;
     box-shadow: none !important;
   }
 }
+
 .button.authorization-button {
   width: 20%;
   height: 100%;
   color: #4d220e;
   border: none;
+
   &:hover {
     background-color: #deba89;
     text-shadow: #6d993a 5px 0 15px;
   }
 }
+
 .button.login-button {
   position: absolute !important;
   margin-top: 18%;
@@ -74,11 +128,13 @@
   color: #4d220e;
   border: solid #4d220e 2px;
   border-radius: 10px;
+
   &:hover {
     background-color: #6d993a;
     box-shadow: #6d993a 5px 0 15px;
   }
 }
+
 .button.registry-button {
   position: absolute !important;
   margin-top: 18%;
@@ -88,17 +144,21 @@
   color: #4d220e;
   border: solid #4d220e 2px;
   border-radius: 10px;
+
   &:hover {
     background-color: #6d993a;
     box-shadow: #6d993a 5px 0 15px;
   }
 }
+
 /* /////// */
 
 /* АВТОРИЗАЦИЯ */
 .authorization-widget {
   position: absolute;
+
   /* display: flex; */
+
   /* justify-content: center;
   align-items: center; */
   top: 50%;
@@ -108,6 +168,7 @@
   width: 600px;
   border-radius: 15px;
   background-color: #deba89;
+
   .head {
     display: flex;
     border-bottom: #4d220e 2px;
@@ -116,79 +177,174 @@
     align-items: center;
     justify-content: center;
   }
+
   .field {
     /* position: fixed; */
     display: flex;
     height: 20%;
     width: 100%;
+
     /* left: 33%; */
     justify-content: center;
     align-items: center;
+
     /* justify-content: center; */
     .login {
       /* position: fixed; */
       margin-top: 27%;
     }
+
     .password {
       /* position: fixed; */
       margin-top: 30%;
     }
   }
 }
+
 /* /////// */
 
 /* ЛИЧНЫЙ КАБИНЕТ */
 .desktop-widget {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin-left: auto;
-  margin-right: auto;
   height: 80%;
   width: 80%;
   border-radius: 15px;
   background-color: #deba89;
+
   .fio {
-    display: flex;
     position: absolute;
+    border-top-left-radius: 15px;
     border: solid #4d220e 2px;
     top: 5%;
     left: 5%;
     height: 10%;
     width: 50%;
-    align-items: center;
-    justify-content: center;
   }
-  .relations-fields {
+
+  .relations {
     position: absolute;
     height: 45%;
     width: 90%;
     border: solid #4d220e 2px;
     top: 20%;
     left: 5%;
-    .login {
-      margin-top: 27%;
+
+    .allergens-label {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      position: absolute;
+      margin-top: 1.7%;
+      margin-left: 2.5%;
+      border: solid #4d220e 2px;
+      border-bottom: none;
+      height: 10%;
+      width: 29%;
     }
-    .password {
-      margin-top: 30%;
+
+    .allergens {
+      position: absolute;
+      border: solid #4d220e 2px;
+      height: 80%;
+      width: 30%;
+      margin-top: 5.5%;
+      margin-left: 2.5%;
+      overflow-y: scroll;
+    }
+
+    .favoriteProducts-label {
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      position: absolute;
+      margin-top: 1.7%;
+      margin-left: 35%;
+      border: solid #4d220e 2px;
+      border-bottom: none;
+      height: 10%;
+      width: 29%;
+    }
+
+    .favoriteProducts {
+      position: absolute;
+      border: solid #4d220e 2px;
+      height: 80%;
+      width: 30%;
+      margin-top: 5.5%;
+      margin-left: 35%;
+      overflow-y: scroll;
+    }
+
+    .favoriteRecipes-label {
+      border-top-right-radius: 15px;
+      border-top-left-radius: 15px;
+      position: absolute;
+      margin-top: 1.7%;
+      margin-left: 67.5%;
+      border: solid #4d220e 2px;
+      border-bottom: none;
+      height: 10%;
+      width: 29%;
+    }
+
+    .favoriteRecipes {
+      position: absolute;
+      border: solid #4d220e 2px;
+      height: 80%;
+      width: 30%;
+      margin-top: 5.5%;
+      margin-left: 67.5%;
+      overflow-y: scroll;
     }
   }
-  .analysis-field {
+
+  .analysis {
     position: absolute;
     height: 10%;
     width: 90%;
     border: solid #4d220e 2px;
     top: 70%;
     left: 5%;
+
+    .label {
+      position: absolute;
+      height: 100%;
+      width: 20%;
+      border-right: solid #4d220e 2px;
+    }
+
+    .field {
+      overflow-y: scroll;
+      width: 78%;
+      height: 100%;
+      text-align: justify;
+      margin-left: 21%;
+      padding-right: 1%;
+    }
   }
-  .conclusion-field {
+
+  .conclusion {
     position: absolute;
     height: 10%;
     width: 90%;
     border: solid #4d220e 2px;
     top: 85%;
     left: 5%;
+    border-bottom-left-radius: 15px;
+
+    .label {
+      position: absolute;
+      height: 100%;
+      width: 20%;
+      border-right: solid #4d220e 2px;
+    }
+
+    .field {
+      overflow-y: scroll;
+      width: 78%;
+      height: 100%;
+      text-align: justify;
+      margin-left: 21%;
+      padding-right: 1%;
+    }
   }
 }
+
 /* /////// */

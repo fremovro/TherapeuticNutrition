@@ -35,7 +35,7 @@ namespace Infrastructure.DataAccess.Repositories
                 Fio = pacient.Fio,
                 Password = pacient.Password,
                 Analysis = pacient.Analysis,
-
+                Сonclusion = pacient.Conclusion
             };
             await _context.Pacients.AddAsync(pacientEntity);
             await _context.SaveChangesAsync();
@@ -49,7 +49,7 @@ namespace Infrastructure.DataAccess.Repositories
             if (pacientEnity == null) { throw new Exception(); }
 
             var pacientModel = Pacient.Create(pacientEnity.Primarykey, pacientEnity.Login, 
-                pacientEnity.Fio, pacientEnity.Password, pacientEnity.Analysis);
+                pacientEnity.Fio, pacientEnity.Password, pacientEnity.Analysis, pacientEnity.Сonclusion);
             return pacientModel;
         }
     }

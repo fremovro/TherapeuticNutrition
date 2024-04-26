@@ -9,14 +9,16 @@ export default class DesktopRoute extends Route {
   @action didTransition() {
     var _this = this;
 
-    this.restApi.sendGetRequest('https://localhost:7253/TherapeuticNutrition/get/pacient')
+    this.restApi
+      .sendGetRequest('https://localhost:7253/TherapeuticNutrition/get/pacient')
       .then(
         function (pacient) {
           _this.controller.set('pacient', pacient);
+          console.log(_this.controller.get('pacient'));
         },
         function (reason) {
           _this.set('pacient', null);
-        }
+        },
       );
   }
 }
