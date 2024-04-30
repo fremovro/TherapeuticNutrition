@@ -1,0 +1,19 @@
+{{#if this.isLoading}}
+    <img class="center-container loading" src="/assets/images/loading.gif"/>
+{{else}}
+    <div class="desktop-widget center-container shadow-high">
+        <div class="left-panel shadow-easy">
+            {{#each this.products as |product|}}
+                <p class="element shadow-easy center-content text" {{on "click" (fn this.changeChosenProduct product)}}>{{product.name}}</p>
+            {{/each}}
+        </div>
+        <div class="allergen shadow-easy">
+            <div class="title center-content text">{{this.chosenProduct.name}}</div>
+            {{#if this.chosenProduct.isFavorite}}
+                <button class="favorite is-favorite" type="button" {{on "click" (fn this.makeFavorite this.chosenProduct)}}></button>
+            {{else}}
+                <button class="favorite" type="button" {{on "click" (fn this.makeFavorite this.chosenProduct)}}></button>
+            {{/if}}
+        </div>
+    </div>
+{{/if}}

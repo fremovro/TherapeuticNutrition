@@ -21,13 +21,6 @@ namespace TherapeuticNutrition.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Pacient>>> Get()
-        {
-            var pacients = await _therapeuticNutritionService.GetAllPacients();
-            return Ok(pacients);
-        }
-
-        [HttpGet]
         [Route("get/pacient")]
         public async Task<ActionResult<Pacient>> GetPacient()
         {
@@ -42,6 +35,20 @@ namespace TherapeuticNutrition.Controllers
             return Ok(pacient);
         }
 
+        [HttpPost]
+        [Route("pacient/change/type={type}&primarykey={primarykey}&isFavorite={isFavorite}")]
+        public async Task<IResult> ChangeFavorite(string type, Guid primarykey, bool isFavorite)
+        {
+            var login = Request.Cookies["login"]?.ToString();
+            if (login == null)
+            {
+                return Results.Unauthorized();
+            }
+            var pacient = await _therapeuticNutritionService.ChangeFavorite(login, type, primarykey, isFavorite);
+            return Results.Ok(pacient);
+        }
+
+        #region Прочие роуты
         [HttpGet]
         [Route("get/allergens")]
         public async Task<ActionResult<Pacient>> GetAllergens()
@@ -53,10 +60,42 @@ namespace TherapeuticNutrition.Controllers
             }
 
             var login = Request.Cookies["login"]?.ToString();
-            var allergens = await _therapeuticNutritionService.GetAllAllergens(login);
+            var allergens = await _therapeuticNutritionService.GetAllergens(login);
             return Ok(allergens);
         }
 
+        [HttpGet]
+        [Route("get/products")]
+        public async Task<ActionResult<Pacient>> GetProducts()
+        {
+            if (Request.Cookies["token"] == null
+                || Request.Cookies["login"] == null)
+            {
+                return Unauthorized("Необходимо авторизоваться");
+            }
+
+            var login = Request.Cookies["login"]?.ToString();
+            var products = await _therapeuticNutritionService.GetProducts(login);
+            return Ok(products);
+        }
+
+        [HttpGet]
+        [Route("get/recipes")]
+        public async Task<ActionResult<Recipe>> GetRecipes()
+        {
+            if (Request.Cookies["token"] == null
+                || Request.Cookies["login"] == null)
+            {
+                return Unauthorized("Необходимо авторизоваться");
+            }
+
+            var login = Request.Cookies["login"]?.ToString();
+            var recipes = await _therapeuticNutritionService.GetRecipes(login);
+            return Ok(recipes);
+        }
+        #endregion
+
+        #region Авторизация
         [HttpGet]
         [Route("login/login={login}&password={password}")]
         public async Task<IResult> Login(string login, string password)
@@ -78,7 +117,7 @@ namespace TherapeuticNutrition.Controllers
                 Response.Cookies.Append("login", login, cookieOptions);
 
                 var pacient = await _therapeuticNutritionService.GetPacientByLogin(login);
-                return Results.Ok(pacient); 
+                return Results.Ok(pacient);
             }
             catch (Exception ex)
             {
@@ -93,5 +132,6 @@ namespace TherapeuticNutrition.Controllers
 
             return Results.Ok();
         }
+        #endregion
     }
 }

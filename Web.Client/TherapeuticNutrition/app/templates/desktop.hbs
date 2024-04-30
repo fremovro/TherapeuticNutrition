@@ -1,24 +1,46 @@
-<div class="desktop-widget center-container shadow-high">
-    <div class="fio center-content shadow-easy text">
-        {{this.pacient.fio}}
-    </div>
-    <div class="relations shadow-easy">
-        <label class="allergens-label text center-content">Аллергены</label>
-        <div class="allergens shadow-easy">
+{{#if this.isLoading}}
+    <img class="center-container loading" src="/assets/images/loading.gif"/>
+{{else}}
+    <div class="desktop-widget center-container shadow-high">
+        <div class="fio center-content shadow-easy text">
+            {{this.pacient.fio}}
         </div>
-        <label class="favoriteProducts-label text center-content">Избранные продукты</label>
-        <div class="favoriteProducts shadow-easy">
+        <div class="relations shadow-easy">
+            <label class="allergens-label text center-content">Аллергены</label>
+            <div class="allergens shadow-easy">
+                {{#each this.pacient.allergens as |allergen|}}
+                    <div class="element shadow-easy center-content">
+                        <p class="button center-content text" {{on "click" (fn this.redirectToAllergens allergen.primarykey)}}>{{allergen.name}}</p>
+                        <img class="cross" src="/assets/images/cross.svg"/ {{on "click" (fn this.removeFromFavorite "Allergen" allergen.primarykey)}}>
+                    </div>
+                {{/each}}
+            </div>
+            <label class="favoriteProducts-label text center-content">Избранные продукты</label>
+            <div class="favoriteProducts shadow-easy">
+                {{#each this.pacient.favoriteProducts as |product|}}
+                    <div class="element shadow-easy center-content">
+                        <p class="button center-content text" {{on "click" (fn this.redirectToProducts product.primarykey)}}>{{product.name}}</p>
+                        <img class="cross" src="/assets/images/cross.svg"/ {{on "click" (fn this.removeFromFavorite "Product" product.primarykey)}}>
+                    </div>
+                {{/each}}
+            </div>
+            <label class="favoriteRecipes-label text center-content">Избранные рецепты</label>
+            <div class="favoriteRecipes shadow-easy">
+                {{#each this.pacient.favoriteRecipes as |recipe|}}
+                    <div class="element shadow-easy center-content">
+                        <p class="button center-content text" {{on "click" (fn this.redirectToRecipes recipe.primarykey)}}>{{recipe.name}}</p>
+                        <img class="cross" src="/assets/images/cross.svg"/ {{on "click" (fn this.removeFromFavorite "Recipe" recipe.primarykey)}}>
+                    </div>
+                {{/each}}
+            </div>
         </div>
-        <label class="favoriteRecipes-label text center-content">Избранные рецепты</label>
-        <div class="favoriteRecipes shadow-easy">
+        <div class="analysis shadow-easy">
+            <label class="text label center-content">Результаты анализов:</label>
+            <div class="field text-easy">{{this.pacient.analysis}}</div>
+        </div>
+        <div class="conclusion shadow-easy">
+            <label class="text label center-content">Заключение врача:</label>
+            <div class="field text-easy">{{this.pacient.conclusion}}</div>
         </div>
     </div>
-    <div class="analysis shadow-easy">
-        <label class="text label center-content">Результаты анализов:</label>
-        <div class="field text-easy">{{this.pacient.analysis}}</div>
-    </div>
-    <div class="conclusion shadow-easy">
-        <label class="text label center-content">Заключение врача:</label>
-        <div class="field text-easy">{{this.pacient.conclusion}}</div>
-    </div>
-</div>
+{{/if}}

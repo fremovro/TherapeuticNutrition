@@ -20,8 +20,6 @@
 
         public static Allergen CreateAllergen(Guid primarykey, string name, string reaction, int dangerDegree, bool isFavorite = false)
         {
-            var error = string.Empty;
-
             var pacient = new Allergen(primarykey, name, reaction, dangerDegree, isFavorite);
 
             return pacient;

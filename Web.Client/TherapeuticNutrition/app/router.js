@@ -10,4 +10,6 @@ Router.map(function () {
   this.route('desktop');
   this.route('authorization');
   this.route('allergens');
+  this.route('products');
+  this.route('recipes');
 });

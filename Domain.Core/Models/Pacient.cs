@@ -28,8 +28,8 @@
         public string? Conclusion { get; } = string.Empty;
 
         public IEnumerable<Allergen>? Allergens { get; set; }
-        public IEnumerable<Product>? FavoriteProducts { get; }
-        public IEnumerable<Recipe>? FavoriteRecipes { get; }
+        public IEnumerable<Product>? FavoriteProducts { get; set; }
+        public IEnumerable<Recipe>? FavoriteRecipes { get; set; }
 
         public static Pacient CreatePacient (Guid primarykey,
             string login, string fio, string password, string? analysis = null, string? conclusion = null,

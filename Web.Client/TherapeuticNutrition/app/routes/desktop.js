@@ -8,15 +8,24 @@ export default class DesktopRoute extends Route {
   @action didTransition() {
     var _this = this;
 
+    _this.controller.set('isLoading', true);
+
     this.restApi
       .sendGetRequest('https://localhost:7253/TherapeuticNutrition/get/pacient')
       .then(
         function (pacient) {
-          _this.controller.set('pacient', pacient);
-          console.log(_this.controller.get('pacient'));
+          setTimeout(() => {
+            _this.controller.set('isLoading', false);
+            _this.controller.set('pacient', pacient);
+            console.log(_this.controller.get('pacient'));
+          }, 500);
         },
         function (reason) {
-          _this.set('pacient', null);
+          setTimeout(() => {
+            _this.controller.set('isLoading', false);
+            _this.controller.send('redirect', 'authorization');
+            _this.set('pacient', null);
+          }, 500);
         },
       );
   }

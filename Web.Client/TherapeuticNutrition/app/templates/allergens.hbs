@@ -1,5 +1,21 @@
-<div class="desktop-widget center-container shadow-high">
-    <div class="left-panel">
-    
+{{#if this.isLoading}}
+    <img class="center-container loading" src="/assets/images/loading.gif"/>
+{{else}}
+    <div class="desktop-widget center-container shadow-high">
+        <div class="left-panel shadow-easy">
+            {{#each this.allergens as |allergen|}}
+                <p class="element shadow-easy center-content text" {{on "click" (fn this.changeChosenAllergen allergen)}}>{{allergen.name}}</p>
+            {{/each}}
+        </div>
+        {{#if this.chosenAllergen}}
+            <div class="allergen shadow-easy">
+                <div class="title center-content text">{{this.chosenAllergen.name}}</div>
+                {{#if this.chosenAllergen.isFavorite}}
+                    <button class="favorite is-favorite" type="button" {{on "click" (fn this.makeFavorite this.chosenAllergen)}}></button>
+                {{else}}
+                    <button class="favorite" type="button" {{on "click" (fn this.makeFavorite this.chosenAllergen)}}></button>
+                {{/if}}
+            </div>
+        {{/if}}
     </div>
-</div>
+{{/if}}

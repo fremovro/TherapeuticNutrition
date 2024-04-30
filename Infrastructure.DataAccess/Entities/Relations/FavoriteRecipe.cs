@@ -8,6 +8,6 @@ namespace Infrastructure.DataAccess.Entities.Relations
         public Guid Primarykey { get; set; }
 
         public Guid Pacient { get; set; }
-        public Guid Recipie { get; set; }
+        public Guid Recipe { get; set; }
     }
 }

@@ -17,6 +17,11 @@
   background-image: url("/assets/images/body-font.jpg");
 }
 
+.loading {
+  width: 25%;
+  height: 25%;
+}
+
 .center-container {
   position: absolute !important;
   top: 50%;
@@ -108,8 +113,7 @@
   border: none;
 
   &:hover {
-    background-color: #deba89;
-    text-shadow: #6d993a 5px 0 15px;
+    color: #6d993a;
   }
 }
 
@@ -150,11 +154,6 @@
 /* АВТОРИЗАЦИЯ */
 .authorization-widget {
   position: absolute;
-
-  /* display: flex; */
-
-  /* justify-content: center;
-  align-items: center; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -226,7 +225,7 @@
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
       position: absolute;
-      margin-top: 1.7%;
+      top: 5%;
       margin-left: 2.5%;
       border: solid #4d220e 2px;
       border-bottom: none;
@@ -239,16 +238,57 @@
       border: solid #4d220e 2px;
       height: 80%;
       width: 30%;
-      margin-top: 5.5%;
-      margin-left: 2.5%;
+      top: 15%;
+      left: 2.5%;
       overflow-y: scroll;
+
+      .element {
+        position: flex;
+        border: solid #4d220e 2px;
+        height: 10%;
+        width: 93.5%;
+        margin: 2.5%;
+
+        &:hover {
+          border-color: #6d993a;
+          color: #6d993a;
+          box-shadow: #6d993a 5px 0 15px;
+        }
+
+        .button {
+          position: absolute;
+          height: 9%;
+          width: 84%;
+          left: 3%;
+
+          &:hover {
+            color: #6d993a;
+          }
+        }
+
+        .cross {
+          position: absolute;
+          background-color: #deba89;
+
+          /* border: solid #4d220e 2px; */
+          height: 5%;
+          width: 5%;
+          left: 88%;
+
+          &:hover {
+            height: 7%;
+            width: 7%;
+            left: 87%;
+          }
+        }
+      }
     }
 
     .favoriteProducts-label {
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
       position: absolute;
-      margin-top: 1.7%;
+      top: 5%;
       margin-left: 35%;
       border: solid #4d220e 2px;
       border-bottom: none;
@@ -261,16 +301,57 @@
       border: solid #4d220e 2px;
       height: 80%;
       width: 30%;
-      margin-top: 5.5%;
+      top: 15%;
       margin-left: 35%;
       overflow-y: scroll;
+
+      .element {
+        position: flex;
+        border: solid #4d220e 2px;
+        height: 10%;
+        width: 93.5%;
+        margin: 2.5%;
+
+        &:hover {
+          border-color: #6d993a;
+          color: #6d993a;
+          box-shadow: #6d993a 5px 0 15px;
+        }
+
+        .button {
+          position: absolute;
+          height: 9%;
+          width: 84%;
+          left: 3%;
+
+          &:hover {
+            color: #6d993a;
+          }
+        }
+
+        .cross {
+          position: absolute;
+          background-color: #deba89;
+
+          /* border: solid #4d220e 2px; */
+          height: 5%;
+          width: 5%;
+          left: 88%;
+
+          &:hover {
+            height: 7%;
+            width: 7%;
+            left: 87%;
+          }
+        }
+      }
     }
 
     .favoriteRecipes-label {
       border-top-right-radius: 15px;
       border-top-left-radius: 15px;
       position: absolute;
-      margin-top: 1.7%;
+      top: 5%;
       margin-left: 67.5%;
       border: solid #4d220e 2px;
       border-bottom: none;
@@ -283,9 +364,46 @@
       border: solid #4d220e 2px;
       height: 80%;
       width: 30%;
-      margin-top: 5.5%;
+      top: 15%;
       margin-left: 67.5%;
       overflow-y: scroll;
+
+      .element {
+        position: flex;
+        border: solid #4d220e 2px;
+        height: 10%;
+        width: 93.5%;
+        margin: 2.5%;
+
+        &:hover {
+          border-color: #6d993a;
+          color: #6d993a;
+          box-shadow: #6d993a 5px 0 15px;
+        }
+
+        .button {
+          position: absolute;
+          height: 9%;
+          width: 84%;
+          left: 3%;
+          &:hover {
+            color: #6d993a;
+          }
+        }
+
+        .cross {
+          position: absolute;
+          background-color: #deba89;
+          height: 5%;
+          width: 5%;
+          left: 88%;
+          &:hover {
+            height: 7%;
+            width: 7%;
+            left: 87%;
+          }
+        }
+      }
     }
   }
 
@@ -348,8 +466,63 @@
     border: solid #4d220e 2px;
     top: 2.5%;
     left: 2.5%;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
+
+    .element {
+      border-radius: 15px;
+      position: flex;
+      border: solid #4d220e 2px;
+
+      /* text-indent: 3%; */
+      width: 94%;
+      height: 5%;
+      margin: 2.5%;
+
+      /* margin-top: 4%;
+      margin-left: 4%; */
+      &:hover {
+        border-color: #6d993a;
+        color: #6d993a;
+        box-shadow: #6d993a 5px 0 15px;
+      }
+    }
+  }
+
+  .allergen {
+    position: absolute;
+    border: solid #4d220e 2px;
+    height: 95%;
+    width: 62.5%;
+    top: 2.5%;
+    left: 35%;
+
+    .title {
+      position: absolute;
+      border: solid #4d220e 2px;
+      height: 7%;
+      width: 50%;
+      top: 2.5%;
+      left: 2.5%;
+    }
+
+    .favorite {
+      position: absolute;
+      border: solid #4d220e 2px;
+      background-color: #deba89;
+      border-radius: 50%;
+      height: 7%;
+      width: 7%;
+      top: 2.5%;
+      right: 2.5%;
+
+      &:hover {
+        border-color: #6d993a;
+        box-shadow: #6d993a 5px 0 15px;
+      }
+    }
+
+    .is-favorite {
+      background-color: #6d993a;
+    }
   }
 }
 
