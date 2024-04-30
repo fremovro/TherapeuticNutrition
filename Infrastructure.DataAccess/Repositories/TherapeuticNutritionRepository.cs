@@ -2,6 +2,7 @@
 using Domain.Core.Interfaces;
 using Domain.Core.Models;
 using Infrastructure.DataAccess.Entities.Relations;
+using Infrastructure.DataAccess.Entities.Files;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DataAccess.Repositories

@@ -487,14 +487,13 @@
     }
   }
 
-  .allergen {
+  .modal {
     position: absolute;
     border: solid #4d220e 2px;
     height: 95%;
     width: 62.5%;
     top: 2.5%;
     left: 35%;
-
     .title {
       position: absolute;
       border: solid #4d220e 2px;
@@ -503,7 +502,6 @@
       top: 2.5%;
       left: 2.5%;
     }
-
     .favorite {
       position: absolute;
       border: solid #4d220e 2px;
@@ -519,9 +517,16 @@
         box-shadow: #6d993a 5px 0 15px;
       }
     }
-
     .is-favorite {
       background-color: #6d993a;
+    }
+    .image {
+      position: absolute;
+      border: solid #4d220e 2px;
+      height: 40%;
+      width: 50%;
+      top: 12.5%;
+      left: 2.5%;
     }
   }
 }

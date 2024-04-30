@@ -11,6 +11,7 @@ export default class ProductsController extends Controller {
   products = [];
   chosenProductPrimarykey = null;
   chosenProduct = null;
+  productImageUrl = 'https://www.ulfven.no/files/sculptor30/library/images/default-product-image.png';
 
   @action redirect(route) {
     this.router.transitionTo(route);
@@ -18,6 +19,7 @@ export default class ProductsController extends Controller {
 
   @action changeChosenProduct(product) {
     this.set('chosenProduct', product);
+    this.send('setProductImageUrl');
   }
 
   @action makeFavorite(product) {
@@ -35,4 +37,21 @@ export default class ProductsController extends Controller {
         function () {},
       );
   }
+
+  @action setProductImageUrl() {
+    var _this = this;
+
+    var chosenProduct = _this.get('chosenProduct');
+    if (!chosenProduct) return null;
+
+    this.restApi.sendGetRequest('https://localhost:7253/TherapeuticNutrition/get/image/relation=' + chosenProduct.primarykey)
+    .then(
+      function (productImageUrl) {
+        _this.set('productImageUrl', productImageUrl);
+      },
+      function (reason) {
+        _this.set('productImageUrl', 'https://www.ulfven.no/files/sculptor30/library/images/default-product-image.png');
+      }
+    );
+  };
 }

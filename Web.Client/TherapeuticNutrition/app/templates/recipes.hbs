@@ -8,13 +8,14 @@
             {{/each}}
         </div>
         {{#if this.chosenRecipe}}
-            <div class="allergen shadow-easy">
+            <div class="modal shadow-easy">
                 <div class="title center-content text">{{this.chosenRecipe.name}}</div>
                 {{#if this.chosenRecipe.isFavorite}}
                     <button class="favorite is-favorite" type="button" {{on "click" (fn this.makeFavorite this.chosenRecipe)}}></button>
                 {{else}}
                     <button class="favorite" type="button" {{on "click" (fn this.makeFavorite this.chosenRecipe)}}></button>
                 {{/if}}
+                <img class="image" src={{this.recipeImageUrl}}/>
             </div>
         {{/if}}
     </div>

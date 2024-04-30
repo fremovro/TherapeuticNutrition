@@ -1,5 +1,7 @@
+using System.Drawing;
 using Domain.Core.Models;
 using Domain.Services.Interfaces;
+using Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -11,13 +13,16 @@ namespace TherapeuticNutrition.Controllers
     public class TherapeuticNutritionController : ControllerBase
     {
         private readonly ITherapeuticNutritionService _therapeuticNutritionService;
+        private readonly IContentProvider _fileProvider;
         private readonly Domain.Services.Interfaces.IAuthorizationService _authorizationService;
 
         public TherapeuticNutritionController(ITherapeuticNutritionService therapeuticNutritionService, 
-            Domain.Services.Interfaces.IAuthorizationService authorizationService)
+            Domain.Services.Interfaces.IAuthorizationService authorizationService,
+            IContentProvider fileProvider)
         {
             _therapeuticNutritionService = therapeuticNutritionService;
             _authorizationService = authorizationService;
+            _fileProvider = fileProvider;
         }
 
         [HttpGet]
@@ -27,10 +32,10 @@ namespace TherapeuticNutrition.Controllers
             if (Request.Cookies["token"] == null 
                 || Request.Cookies["login"] == null)
             {
-                return Unauthorized("Необходимо авторизоваться");
+                return Unauthorized();
             }
 
-            var login = Request.Cookies["login"]?.ToString() ?? "fremov.ro";
+            var login = Request.Cookies["login"]?.ToString();
             var pacient = await _therapeuticNutritionService.GetPacientByLogin(login);
             return Ok(pacient);
         }
@@ -131,6 +136,17 @@ namespace TherapeuticNutrition.Controllers
             await _authorizationService.Register(login, fio, password);
 
             return Results.Ok();
+        }
+        #endregion
+
+        #region Файлы
+        [HttpGet]
+        [Route("get/image/relation={relation}")]
+        public async Task<ActionResult<string>> GetImageUrl(Guid relation)
+        {
+
+            var img = await _fileProvider.GetImageUrl(relation);
+            return Ok(img);
         }
         #endregion
     }

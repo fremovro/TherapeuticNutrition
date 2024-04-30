@@ -8,7 +8,7 @@
             {{/each}}
         </div>
         {{#if this.chosenAllergen}}
-            <div class="allergen shadow-easy">
+            <div class="modal shadow-easy">
                 <div class="title center-content text">{{this.chosenAllergen.name}}</div>
                 {{#if this.chosenAllergen.isFavorite}}
                     <button class="favorite is-favorite" type="button" {{on "click" (fn this.makeFavorite this.chosenAllergen)}}></button>

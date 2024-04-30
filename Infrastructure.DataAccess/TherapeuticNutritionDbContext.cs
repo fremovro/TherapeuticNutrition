@@ -19,6 +19,8 @@ namespace Infrastructure.DataAccess
 
         public DbSet<Recipe> Recipes { get; set; }
 
+        public DbSet<Entities.Files.File> Files { get; set; }
+
         #region Relations
         public DbSet<FavoriteProduct> FavoriteProducts { get; set; }
         public DbSet<FavoriteRecipe> FavoriteRecipes { get; set; }

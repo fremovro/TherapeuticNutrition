@@ -3,6 +3,7 @@ using Domain.Services;
 using Domain.Services.Interfaces;
 using Infrastructure.DataAccess;
 using Infrastructure.DataAccess.Repositories;
+using Infrastructure.Services.Interfaces;
 using Infrastructure.Services.Options;
 using Infrastructure.Services.Providers;
 using Infrastructure.Services.Services;
@@ -36,10 +37,13 @@ builder.Services.AddDbContext<TherapeuticNutritionDbContext>(
         b => b.MigrationsAssembly("TherapeuticNutrition")));
 
 builder.Services.AddScoped<ITherapeuticNutritionRepository, TherapeuticNutritionRepository>();
+builder.Services.AddScoped<IFileRepository, FileRepository>();
 
 builder.Services.AddScoped<ITherapeuticNutritionService, TherapeuticNutritionService>();
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
+
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+builder.Services.AddScoped<IContentProvider, ContentProvider>();
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

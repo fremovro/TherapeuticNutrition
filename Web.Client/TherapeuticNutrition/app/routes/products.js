@@ -35,6 +35,8 @@ export default class ProductsRoute extends Route {
               _this.controller.set('chosenProduct', products[0]);
             }
 
+            _this.controller.send('setProductImageUrl');
+
             console.log(products);
           }, 500);
         },
@@ -45,5 +47,5 @@ export default class ProductsRoute extends Route {
           }, 500);
         },
       );
-  }
+  };
 }
