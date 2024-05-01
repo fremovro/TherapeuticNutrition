@@ -14,17 +14,19 @@ export default class RecipesRoute extends Route {
       function (recipes) {
         setTimeout(() => {
           _this.controller.set('isLoading', false);
-          _this.controller.set('recipes', recipes);
+          _this.controller.set('recipes', recipes.sort(function(a,b){
+            return a.name.localeCompare(b.name);
+          }));
+
+          _this.controller.set('allRecipes', recipes);
+          _this.controller.set('favoriteRecipes', 
+            recipes.filter((recipe) => recipe.isFavorite)
+          );
 
           if (_this.controller.get('chosenRecipePrimarykey') != null) {
             _this.controller.set(
               'chosenRecipe',
-              recipes.find((recipe) => {
-                return (
-                  recipe.primarykey ==
-                  _this.controller.get('chosenRecipePrimarykey')
-                );
-              }),
+              recipes.find((recipe) => recipe.primarykey == _this.controller.get('chosenRecipePrimarykey'))
             );
           }
 

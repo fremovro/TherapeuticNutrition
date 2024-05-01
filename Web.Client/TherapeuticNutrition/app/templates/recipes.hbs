@@ -2,6 +2,14 @@
     <img class="center-container loading" src="/assets/images/loading.gif"/>
 {{else}}
     <div class="desktop-widget center-container shadow-high">
+        <div class="left-panel-favorite center-content">
+            <label class="text">Избранные:</label>
+            <input type="checkbox" class="checkbox" {{on "change" this.changeFavoriteFlag}}>
+        </div>
+        <div class="left-panel-find center-content">
+            <label class="text">Поиск:</label>
+            <Input @type="text" @value={{this.searchStr}} {{on "input" this.changeSearchStr}}/>
+        </div>
         <div class="left-panel shadow-easy">
             {{#each this.recipes as |recipe|}}
                 <p class="element shadow-easy center-content text" {{on "click" (fn this.changeChosenRecipe recipe)}}>{{recipe.name}}</p>

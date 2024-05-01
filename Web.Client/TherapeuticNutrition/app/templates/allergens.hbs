@@ -2,6 +2,14 @@
     <img class="center-container loading" src="/assets/images/loading.gif"/>
 {{else}}
     <div class="desktop-widget center-container shadow-high">
+        <div class="left-panel-favorite center-content">
+            <label class="text">Избранные:</label>
+            <input type="checkbox" class="checkbox" {{on "change" this.changeFavoriteFlag}}>
+        </div>
+        <div class="left-panel-find center-content">
+            <label class="text">Поиск:</label>
+            <Input @type="text" @value={{this.searchStr}} {{on "input" this.changeSearchStr}}/>
+        </div>
         <div class="left-panel shadow-easy">
             {{#each this.allergens as |allergen|}}
                 <p class="element shadow-easy center-content text" {{on "click" (fn this.changeChosenAllergen allergen)}}>{{allergen.name}}</p>
@@ -15,6 +23,20 @@
                 {{else}}
                     <button class="favorite" type="button" {{on "click" (fn this.makeFavorite this.chosenAllergen)}}></button>
                 {{/if}}
+                <div class="allergen-reaction text center-content">{{this.chosenAllergen.reaction}}</div>
+                <label class="degree-label text center-content">Степень опасности</label>
+                <div class="degree center-content">
+                    {{#each this.dangerDegrees as |s|}}
+                        <p class="element" style={{s}}></p>
+                    {{/each}}
+                </div>  
+                <div class="degree-note">
+                    <label class="element text-easy">1 - Лёгкие симптомы</label>
+                    <label class="element text-easy">2 - Умеренные симптомы</label>
+                    <label class="element text-easy">3 - Серьёзные симптомы</label>
+                    <label class="element text-easy">4 - Возможен летальный исход</label>
+                    <label class="element text-easy">5 - Неизбежен летальный исход</label>
+                </div>
             </div>
         {{/if}}
     </div>

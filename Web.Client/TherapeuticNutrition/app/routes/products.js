@@ -17,17 +17,19 @@ export default class ProductsRoute extends Route {
         function (products) {
           setTimeout(() => {
             _this.controller.set('isLoading', false);
-            _this.controller.set('products', products);
+            _this.controller.set('products', products.sort(function(a,b){
+              return a.name.localeCompare(b.name);
+            }));
+
+            _this.controller.set('allProducts', products);
+            _this.controller.set('favoriteProducts', 
+              products.filter((product) => product.isFavorite)
+            );
 
             if (_this.controller.get('chosenProductPrimarykey') != null) {
               _this.controller.set(
                 'chosenProduct',
-                products.find((products) => {
-                  return (
-                    products.primarykey ==
-                    _this.controller.get('chosenProductPrimarykey')
-                  );
-                }),
+                products.find((product) => product.primarykey == _this.controller.get('chosenProductPrimarykey')),
               );
             }
 
