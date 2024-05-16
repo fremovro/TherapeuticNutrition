@@ -1,9 +1,13 @@
 using System.Drawing;
+using System.IO;
 using Domain.Core.Models;
+using Domain.Services;
 using Domain.Services.Interfaces;
 using Infrastructure.Services.Interfaces;
+using Infrastructure.Services.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TherapeuticNutrition.Controllers
@@ -14,14 +18,17 @@ namespace TherapeuticNutrition.Controllers
     {
         private readonly ITherapeuticNutritionService _therapeuticNutritionService;
         private readonly IContentProvider _fileProvider;
+        private readonly IGenerateRecipeService _generateRecipeService;
         private readonly Domain.Services.Interfaces.IAuthorizationService _authorizationService;
 
         public TherapeuticNutritionController(ITherapeuticNutritionService therapeuticNutritionService, 
             Domain.Services.Interfaces.IAuthorizationService authorizationService,
+            IGenerateRecipeService generateRecipeService,
             IContentProvider fileProvider)
         {
             _therapeuticNutritionService = therapeuticNutritionService;
             _authorizationService = authorizationService;
+            _generateRecipeService = generateRecipeService;
             _fileProvider = fileProvider;
         }
 
@@ -38,6 +45,24 @@ namespace TherapeuticNutrition.Controllers
             var login = Request.Cookies["login"]?.ToString();
             var pacient = await _therapeuticNutritionService.GetPacientByLogin(login);
             return Ok(pacient);
+        }
+
+        [HttpPost]
+        [Route("generate/recipe/products={productKeys}")]
+        public async Task<ActionResult<Pacient>> GenerateRecipe(string productKeys)
+        {
+            if (Request.Cookies["token"] == null
+                || Request.Cookies["login"] == null)
+            {
+                return Unauthorized();
+            }
+
+            var login = Request.Cookies["login"]?.ToString();
+            var products = _therapeuticNutritionService.GetProducts(login).Result?
+                .Where(e => productKeys.Split("&").Select(p => Guid.Parse(p)).Contains(e.Primarykey)).ToList();
+            var recipe = await _generateRecipeService.GenerateRecipe(products);
+
+            return Ok(recipe);
         }
 
         [HttpPost]
@@ -146,7 +171,17 @@ namespace TherapeuticNutrition.Controllers
         {
 
             var img = await _fileProvider.GetImageUrl(relation);
+
             return Ok(img);
+        }
+
+        [HttpGet]
+        [Route("images/{id}")]
+        public FileResult Image(string id)
+        {
+            var path = Path.Combine([Directory.GetCurrentDirectory(), id + ".jpg"]);
+            var img = new FileStreamResult(new FileStream(path, FileMode.Open), "image/jpeg");
+            return img;
         }
         #endregion
     }

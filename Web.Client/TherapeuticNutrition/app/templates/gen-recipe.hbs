@@ -1,0 +1,29 @@
+{{#if this.isLoading}}
+    <img class="center-container loading" src="/assets/images/loading.gif"/>
+{{else}}
+    <div class="desktop-widget center-container shadow-high">
+         <div class="left-panel-favorite center-content">
+            <label class="text">Избранные:</label>
+            <input type="checkbox" class="checkbox" {{on "change" this.changeFavoriteFlag}}>
+        </div>
+        <div class="left-panel-find center-content">
+            <label class="text">Поиск:</label>
+            <Input @type="text" @value={{this.searchStr}} {{on "input" this.changeSearchStr}}/>
+        </div>
+        <div class="left-panel shadow-easy">
+            {{#each this.products as |product|}}
+                <p class="element shadow-easy center-content text" {{on "click" (fn this.addChosenProduct product)}}>{{product.name}}</p>
+            {{/each}}
+        </div>
+        
+        <div class="modal trim shadow-easy scroll">
+            {{#each this.chosenProducts as |product|}}
+                <div class="element shadow-easy center-content">
+                    <p class="button center-content text">{{product.name}}</p>
+                    <img class="cross" src="/assets/images/cross.svg"/ {{on "click" (fn this.removeFromChosenProducts product)}}>
+                </div>
+            {{/each}}
+        </div>
+        <button class="button generate-recipe-button-2 text" type="button" {{on "click" this.generateRecipe}}>Сгенерировать рецепт</button>
+    </div>
+{{/if}}

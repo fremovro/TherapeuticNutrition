@@ -17,26 +17,34 @@ export default class AllergensRoute extends Route {
         function (allergens) {
           setTimeout(() => {
             _this.controller.set('isLoading', false);
-            _this.controller.set('allergens', allergens.sort(function(a,b){
-              return a.name.localeCompare(b.name);
-            }));
+            _this.controller.set(
+              'allergens',
+              allergens.sort(function (a, b) {
+                return a.name.localeCompare(b.name);
+              }),
+            );
 
             _this.controller.set('allAllergens', allergens);
-            _this.controller.set('favoriteAllergens', 
-              allergens.filter((allergen) => allergen.isFavorite)
+            _this.controller.set(
+              'favoriteAllergens',
+              allergens.filter((allergen) => allergen.isFavorite),
             );
 
             if (_this.controller.get('chosenAllergenPrimarykey') != null) {
               _this.controller.set(
                 'chosenAllergen',
-                allergens.find((allergen) => allergen.primarykey == _this.controller.get('chosenAllergenPrimarykey')),
+                allergens.find(
+                  (allergen) =>
+                    allergen.primarykey ==
+                    _this.controller.get('chosenAllergenPrimarykey'),
+                ),
               );
             }
 
             if (_this.controller.get('chosenAllergen') == null) {
               _this.controller.set('chosenAllergen', allergens[0]);
             }
-            
+
             console.log(allergens);
           }, 500);
         },

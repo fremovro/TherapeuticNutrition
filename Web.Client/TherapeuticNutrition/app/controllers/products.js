@@ -17,16 +17,17 @@ export default class ProductsController extends Controller {
   searchStr = '';
   chosenProductPrimarykey = null;
   chosenProduct = null;
-  productImageUrl = 'https://www.ulfven.no/files/sculptor30/library/images/default-product-image.png';
+  productImageUrl =
+    'https://www.ulfven.no/files/sculptor30/library/images/default-product-image.png';
 
   // Default
   @action redirect(route) {
     this.router.transitionTo(route);
-  };
+  }
   @action changeChosenProduct(product) {
     this.set('chosenProduct', product);
     this.send('setProductImageUrl');
-  };
+  }
   // Default
 
   // Избранное
@@ -34,19 +35,21 @@ export default class ProductsController extends Controller {
     this.set('chosenProduct.isFavorite', !product.isFavorite);
 
     // Избранное: фильтр
-    let favoriteProducts = this.get('favoriteProducts');
+    let favoriteProducts = this.favoriteProducts;
     if (product.isFavorite) {
       favoriteProducts.push(product);
       this.set('favoriteProducts', favoriteProducts);
-    }
-    else {
-      favoriteProducts = favoriteProducts.filter(item => item !== product);
+    } else {
+      favoriteProducts = favoriteProducts.filter((item) => item !== product);
       this.set('favoriteProducts', favoriteProducts);
     }
-    if (this.get('favoriteFlag')) {
-      this.set('products', favoriteProducts.sort(function(a,b){
-        return a.name.localeCompare(b.name);
-      }));
+    if (this.favoriteFlag) {
+      this.set(
+        'products',
+        favoriteProducts.sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        }),
+      );
     }
 
     this.restApi
@@ -62,63 +65,77 @@ export default class ProductsController extends Controller {
         },
         function (error) {
           console.log(error);
-        }
+        },
       );
-  };
+  }
   @action changeFavoriteFlag() {
-    var isFavorite = !this.get('favoriteFlag');
+    var isFavorite = !this.favoriteFlag;
     this.set('favoriteFlag', isFavorite);
 
     if (isFavorite) {
-      this.set('products', this.get('favoriteProducts').sort(function(a,b){
-        return a.name.localeCompare(b.name);
-      }));
-    }
-    else {
-      this.set('products', this.get('allProducts').sort(function(a,b){
-        return a.name.localeCompare(b.name);
-      }));
-    }
-
-    if (this.get('searchStr')) {
-      var searchProducts = this.get('products')
-        .filter(item => item.name.toLowerCase().includes(this.get('searchStr').toLowerCase()))
-        .sort(function(a,b) {return a.name.localeCompare(b.name); });
-        this.set('products', searchProducts);
+      this.set(
+        'products',
+        this.favoriteProducts.sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        }),
+      );
+    } else {
+      this.set(
+        'products',
+        this.allProducts.sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        }),
+      );
     }
 
-    this.send('changeChosenProduct', this.get('products')[0]);
-  };
+    if (this.searchStr) {
+      var searchProducts = this.products
+        .filter((item) =>
+          item.name.toLowerCase().includes(this.searchStr.toLowerCase()),
+        )
+        .sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        });
+      this.set('products', searchProducts);
+    }
+
+    this.send('changeChosenProduct', this.products[0]);
+  }
   // Избранное
 
   // Поиск
   @action changeSearchStr() {
     setTimeout(() => {
-      var searchStr = this.get('searchStr');
-      if (this.get('searchStr')) {
-        if (this.get('favoriteFlag')) {
-          var searchProducts = this.get('favoriteProducts')
-            .filter(item => item.name.toLowerCase().includes(searchStr.toLowerCase()))
-            .sort(function(a,b) {return a.name.localeCompare(b.name); });
-            this.set('products', searchProducts);
+      var searchStr = this.searchStr;
+      if (this.searchStr) {
+        if (this.favoriteFlag) {
+          var searchProducts = this.favoriteProducts
+            .filter((item) =>
+              item.name.toLowerCase().includes(searchStr.toLowerCase()),
+            )
+            .sort(function (a, b) {
+              return a.name.localeCompare(b.name);
+            });
+          this.set('products', searchProducts);
+        } else {
+          var searchProducts = this.allProducts
+            .filter((item) =>
+              item.name.toLowerCase().includes(searchStr.toLowerCase()),
+            )
+            .sort(function (a, b) {
+              return a.name.localeCompare(b.name);
+            });
+          this.set('products', searchProducts);
         }
-        else {
-          var searchProducts = this.get('allProducts')
-            .filter(item => item.name.toLowerCase().includes(searchStr.toLowerCase()))
-            .sort(function(a,b) {return a.name.localeCompare(b.name); });
-            this.set('products', searchProducts);
-        }
-      }
-      else {
-        if (this.get('favoriteFlag')) {
-          this.set('products', this.get('favoriteProducts'));
-        }
-        else {
-          this.set('products', this.get('allProducts'));
+      } else {
+        if (this.favoriteFlag) {
+          this.set('products', this.favoriteProducts);
+        } else {
+          this.set('products', this.allProducts);
         }
       }
     }, 250);
-  };
+  }
   // Поиск
 
   // Image
@@ -128,15 +145,22 @@ export default class ProductsController extends Controller {
     var chosenProduct = _this.get('chosenProduct');
     if (!chosenProduct) return null;
 
-    this.restApi.sendGetRequest('https://localhost:7253/TherapeuticNutrition/get/image/relation=' + chosenProduct.primarykey)
-    .then(
-      function (productImageUrl) {
-        _this.set('productImageUrl', productImageUrl);
-      },
-      function (reason) {
-        _this.set('productImageUrl', 'https://www.ulfven.no/files/sculptor30/library/images/default-product-image.png');
-      }
-    );
-  };
+    this.restApi
+      .sendGetRequest(
+        'https://localhost:7253/TherapeuticNutrition/get/image/relation=' +
+          chosenProduct.primarykey,
+      )
+      .then(
+        function (productImageUrl) {
+          _this.set('productImageUrl', productImageUrl);
+        },
+        function (reason) {
+          _this.set(
+            'productImageUrl',
+            'https://www.ulfven.no/files/sculptor30/library/images/default-product-image.png',
+          );
+        },
+      );
+  }
   // Image
 }

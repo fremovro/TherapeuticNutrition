@@ -9,43 +9,52 @@ export default class RecipesRoute extends Route {
     var _this = this;
 
     _this.controller.set('isLoading', true);
-    this.restApi.sendGetRequest('https://localhost:7253/TherapeuticNutrition/get/recipes')
-    .then(
-      function (recipes) {
-        setTimeout(() => {
-          _this.controller.set('isLoading', false);
-          _this.controller.set('recipes', recipes.sort(function(a,b){
-            return a.name.localeCompare(b.name);
-          }));
-
-          _this.controller.set('allRecipes', recipes);
-          _this.controller.set('favoriteRecipes', 
-            recipes.filter((recipe) => recipe.isFavorite)
-          );
-
-          if (_this.controller.get('chosenRecipePrimarykey') != null) {
+    this.restApi
+      .sendGetRequest('https://localhost:7253/TherapeuticNutrition/get/recipes')
+      .then(
+        function (recipes) {
+          setTimeout(() => {
+            _this.controller.set('isLoading', false);
             _this.controller.set(
-              'chosenRecipe',
-              recipes.find((recipe) => recipe.primarykey == _this.controller.get('chosenRecipePrimarykey'))
+              'recipes',
+              recipes.sort(function (a, b) {
+                return a.name.localeCompare(b.name);
+              }),
             );
-          }
 
-          if (_this.controller.get('chosenRecipe') == null) {
-            _this.controller.set('chosenRecipe', recipes[0]);
-          }
+            _this.controller.set('allRecipes', recipes);
+            _this.controller.set(
+              'favoriteRecipes',
+              recipes.filter((recipe) => recipe.isFavorite),
+            );
 
-          _this.controller.send('setRecipeImageUrl');
+            if (_this.controller.get('chosenRecipePrimarykey') != null) {
+              _this.controller.set(
+                'chosenRecipe',
+                recipes.find(
+                  (recipe) =>
+                    recipe.primarykey ==
+                    _this.controller.get('chosenRecipePrimarykey'),
+                ),
+              );
+            }
 
-          console.log(_this.controller.get('recipeImageUrl'));
-          console.log(recipes);
-        }, 500);
-      },
-      function (reason) {
-        setTimeout(() => {
-          _this.controller.set('isLoading', false);
-          _this.controller.send('redirect', 'desktop');
-        }, 500);
-      },
-    );
+            if (_this.controller.get('chosenRecipe') == null) {
+              _this.controller.set('chosenRecipe', recipes[0]);
+            }
+
+            _this.controller.send('setRecipeImageUrl');
+
+            console.log(_this.controller.get('recipeImageUrl'));
+            console.log(recipes);
+          }, 500);
+        },
+        function (reason) {
+          setTimeout(() => {
+            _this.controller.set('isLoading', false);
+            _this.controller.send('redirect', 'desktop');
+          }, 500);
+        },
+      );
   }
 }

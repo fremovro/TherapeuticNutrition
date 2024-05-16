@@ -149,6 +149,45 @@
   }
 }
 
+.button.generate-recipe-button {
+  color: #4d220e;
+
+  /* border: solid #4d220e 2px; */
+  border-radius: 10px;
+  position: absolute !important;
+  border: solid #4d220e 2px;
+  height: 11%;
+  width: 30.5%;
+  top: 87%;
+  left: 2.5%;
+
+  .in-gen {
+    left: 22.5% !important;
+  }
+
+  &:hover {
+    background-color: #6d993a;
+    box-shadow: #6d993a 5px 0 15px;
+  }
+}
+.button.generate-recipe-button-2 {
+  color: #4d220e;
+
+  /* border: solid #4d220e 2px; */
+  border-radius: 10px;
+  position: absolute !important;
+  border: solid #4d220e 2px;
+  height: 11%;
+  width: 30.5%;
+  top: 75%;
+  left: 52.5%;
+
+  &:hover {
+    background-color: #6d993a;
+    box-shadow: #6d993a 5px 0 15px;
+  }
+}
+
 /* /////// */
 
 /* АВТОРИЗАЦИЯ */
@@ -371,7 +410,7 @@
       .element {
         position: flex;
         border: solid #4d220e 2px;
-        height: 10%;
+        height: 24%;
         width: 93.5%;
         margin: 2.5%;
 
@@ -386,6 +425,7 @@
           height: 9%;
           width: 84%;
           left: 3%;
+
           &:hover {
             color: #6d993a;
           }
@@ -397,6 +437,7 @@
           height: 5%;
           width: 5%;
           left: 88%;
+
           &:hover {
             height: 7%;
             width: 7%;
@@ -466,16 +507,19 @@
     width: 30%;
     top: 2.5%;
     left: 2.5%;
+
     .checkbox {
       border: solid #4d220e 2px;
       margin-top: 2%;
       width: 10%;
       height: 50%;
+
       /* &:checked:after {
         
       } */
     }
   }
+
   .left-panel-find {
     position: absolute;
     border: solid #4d220e 2px;
@@ -485,6 +529,7 @@
     top: 8.75%;
     left: 2.5%;
   }
+
   .left-panel {
     position: absolute;
     overflow-y: scroll;
@@ -493,6 +538,7 @@
     border: solid #4d220e 2px;
     top: 15%;
     left: 2.5%;
+
     .element {
       border-radius: 15px;
       position: flex;
@@ -500,7 +546,7 @@
 
       /* text-indent: 3%; */
       width: 93%;
-      height: 5%;
+      height: auto;
       margin: 2.5%;
 
       /* margin-top: 4%;
@@ -520,14 +566,55 @@
     width: 62.5%;
     top: 2.5%;
     left: 35%;
+
+    .element {
+      position: flex;
+      border: solid #4d220e 2px;
+      height: 10%;
+      width: 93.5%;
+      margin: 2.5%;
+
+      &:hover {
+        border-color: #6d993a;
+        color: #6d993a;
+        box-shadow: #6d993a 5px 0 15px;
+      }
+
+      .button {
+        position: absolute;
+        height: 9%;
+        width: 84%;
+        left: 3%;
+
+        &:hover {
+          color: #6d993a;
+        }
+      }
+
+      .cross {
+        position: absolute;
+        background-color: #deba89;
+        height: 5%;
+        width: 5%;
+        left: 88%;
+
+        &:hover {
+          height: 7%;
+          width: 7%;
+          left: 87%;
+        }
+      }
+    }
+
     .title {
       position: absolute;
       border: solid #4d220e 2px;
-      height: 7%;
+      height: 10%;
       width: 50%;
       top: 2.5%;
       left: 2.5%;
     }
+
     .favorite {
       position: absolute;
       border: solid #4d220e 2px;
@@ -543,17 +630,20 @@
         box-shadow: #6d993a 5px 0 15px;
       }
     }
+
     .is-favorite {
       background-color: #6d993a;
     }
+
     .image {
       position: absolute;
       border: solid #4d220e 2px;
       height: 40%;
       width: 50%;
-      top: 12.5%;
+      top: 15.5%;
       left: 2.5%;
     }
+
     .allergen-reaction {
       position: absolute;
       border: solid #4d220e 2px;
@@ -563,6 +653,7 @@
       top: 12.5%;
       left: 2.5%;
     }
+
     .degree-label {
       position: absolute;
       border: solid #4d220e 2px;
@@ -573,6 +664,7 @@
       top: 12.5%;
       left: 55%;
     }
+
     .degree {
       position: absolute;
       border: solid #4d220e 2px;
@@ -583,15 +675,17 @@
       width: 42.5%;
       top: 19.5%;
       left: 55%;
+
       .element {
         border: solid #4d220e 2px;
         border-radius: 50%;
         height: 70%;
         width: 11%;
-        margin-top: 5.5%;
+        margin-top: 3.5%;
         margin-left: 1.5%;
       }
     }
+    
     .degree-note {
       position: absolute;
       border: solid #4d220e 2px;
@@ -601,7 +695,8 @@
       width: 42.5%;
       top: 27%;
       left: 55%;
-      .element {
+
+      .degree-element {
         /* border: solid #4d220e 2px; */
         height: 17%;
         width: 97%;
@@ -609,6 +704,23 @@
         margin-left: 2.5%;
       }
     }
+
+    .description {
+      position: absolute;
+      border: solid #4d220e 2px;
+      height: 25.5%;
+      width: 95%;
+      top: 58.5%;
+      left: 2.5%;
+    }
+  }
+
+  .trim {
+    height: 70% !important;
+  }
+
+  .scroll {
+    overflow-y: scroll !important; 
   }
 }
 

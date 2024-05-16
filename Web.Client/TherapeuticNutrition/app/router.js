@@ -12,4 +12,5 @@ Router.map(function () {
   this.route('allergens');
   this.route('products');
   this.route('recipes');
+  this.route('gen-recipe');
 });

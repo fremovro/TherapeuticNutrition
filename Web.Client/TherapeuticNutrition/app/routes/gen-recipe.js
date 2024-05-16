@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default class ProductsRoute extends Route {
+export default class GenRecipeRoute extends Route {
   @service restApi;
 
   @action didTransition() {
@@ -22,7 +22,9 @@ export default class ProductsRoute extends Route {
               products.sort(function (a, b) {
                 return a.name.localeCompare(b.name);
               }),
-            );
+            );  
+
+            _this.controller.set('chosenProducts', []);
 
             _this.controller.set('allProducts', products);
             _this.controller.set(
@@ -44,8 +46,6 @@ export default class ProductsRoute extends Route {
             if (_this.controller.get('chosenProduct') == null) {
               _this.controller.set('chosenProduct', products[0]);
             }
-
-            _this.controller.send('setProductImageUrl');
 
             console.log(products);
           }, 500);

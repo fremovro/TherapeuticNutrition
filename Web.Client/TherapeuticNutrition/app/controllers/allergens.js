@@ -22,38 +22,43 @@ export default class AllergensController extends Controller {
   // Default
   @action redirect(route) {
     this.router.transitionTo(route);
-  };
+  }
   @action changeChosenAllergen(allergen) {
     this.set('chosenAllergen', allergen);
-  };
+  }
   // Default
 
   // Шкала
-  calculateDegree = function(position){
+  calculateDegree = function (position) {
     var degree = this.get('chosenAllergen.dangerDegree');
 
-    if (Math.floor(degree/position) >= 1){
+    if (Math.floor(degree / position) >= 1) {
       return 100;
     }
-    if (degree > position){
+    if (degree > position) {
       return (degree % position) * 100;
     }
     return 0;
   };
-  @computed('chosenAllergen') 
-    get dangerDegrees() {
-      let result = [];
-      for (var i = 1; i <= 5; i++) {
-        var calculateDegree =  this.calculateDegree(i);
-        if (calculateDegree == 0) {
-          result.push("background: #deba89");
-          continue;
-        }
-        result.push("background: linear-gradient( to right, #6d993a 0%, #6d993a " + calculateDegree + 
-          "%, #deba89 " + (100 - calculateDegree) + "%, #deba89 100% );");
+  @computed('chosenAllergen')
+  get dangerDegrees() {
+    let result = [];
+    for (var i = 1; i <= 5; i++) {
+      var calculateDegree = this.calculateDegree(i);
+      if (calculateDegree == 0) {
+        result.push('background: #deba89');
+        continue;
       }
-      return  result;
+      result.push(
+        'background: linear-gradient( to right, #6d993a 0%, #6d993a ' +
+          calculateDegree +
+          '%, #deba89 ' +
+          (100 - calculateDegree) +
+          '%, #deba89 100% );',
+      );
     }
+    return result;
+  }
   // Шкала
 
   // Избранное
@@ -61,25 +66,27 @@ export default class AllergensController extends Controller {
     this.set('chosenAllergen.isFavorite', !allergen.isFavorite);
 
     // Избранное: фильтр
-    let favoriteAllergens = this.get('favoriteAllergens');
+    let favoriteAllergens = this.favoriteAllergens;
     if (allergen.isFavorite) {
       favoriteAllergens.push(allergen);
       this.set('favoriteAllergens', favoriteAllergens);
-    }
-    else {
-      favoriteAllergens = favoriteAllergens.filter(item => item !== allergen);
+    } else {
+      favoriteAllergens = favoriteAllergens.filter((item) => item !== allergen);
       this.set('favoriteAllergens', favoriteAllergens);
     }
-    if (this.get('favoriteFlag')) {
-      this.set('allergens', favoriteAllergens.sort(function(a,b){
-        return a.name.localeCompare(b.name);
-      }));
+    if (this.favoriteFlag) {
+      this.set(
+        'allergens',
+        favoriteAllergens.sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        }),
+      );
     }
 
     this.restApi
       .sendPostRequest(
         'pacient/change/type=Allergen&primarykey=' +
-        allergen.primarykey +
+          allergen.primarykey +
           '&isFavorite=' +
           allergen.isFavorite,
       )
@@ -89,62 +96,76 @@ export default class AllergensController extends Controller {
         },
         function (error) {
           console.log(error);
-        }
+        },
       );
-  };
+  }
   @action changeFavoriteFlag() {
-    var isFavorite = !this.get('favoriteFlag');
+    var isFavorite = !this.favoriteFlag;
     this.set('favoriteFlag', isFavorite);
 
     if (isFavorite) {
-      this.set('allergens', this.get('favoriteAllergens').sort(function(a,b){
-        return a.name.localeCompare(b.name);
-      }));
-    }
-    else {
-      this.set('allergens', this.get('allAllergens').sort(function(a,b){
-        return a.name.localeCompare(b.name);
-      }));
-    }
-
-    if (this.get('searchStr')) {
-      var searchAllergens = this.get('allergens')
-        .filter(item => item.name.toLowerCase().includes(this.get('searchStr').toLowerCase()))
-        .sort(function(a,b) {return a.name.localeCompare(b.name); });
-        this.set('allergens', searchAllergens);
+      this.set(
+        'allergens',
+        this.favoriteAllergens.sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        }),
+      );
+    } else {
+      this.set(
+        'allergens',
+        this.allAllergens.sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        }),
+      );
     }
 
-    this.send('changeChosenAllergen', this.get('allergens')[0]);
-  };
+    if (this.searchStr) {
+      var searchAllergens = this.allergens
+        .filter((item) =>
+          item.name.toLowerCase().includes(this.searchStr.toLowerCase()),
+        )
+        .sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        });
+      this.set('allergens', searchAllergens);
+    }
+
+    this.send('changeChosenAllergen', this.allergens[0]);
+  }
   // Избранное
 
   // Поиск
   @action changeSearchStr() {
     setTimeout(() => {
-      var searchStr = this.get('searchStr');
-      if (this.get('searchStr')) {
-        if (this.get('favoriteFlag')) {
-          var searchAllergens = this.get('favoriteAllergens')
-            .filter(item => item.name.toLowerCase().includes(searchStr.toLowerCase()))
-            .sort(function(a,b) {return a.name.localeCompare(b.name); });
-            this.set('allergens', searchAllergens);
+      var searchStr = this.searchStr;
+      if (this.searchStr) {
+        if (this.favoriteFlag) {
+          var searchAllergens = this.favoriteAllergens
+            .filter((item) =>
+              item.name.toLowerCase().includes(searchStr.toLowerCase()),
+            )
+            .sort(function (a, b) {
+              return a.name.localeCompare(b.name);
+            });
+          this.set('allergens', searchAllergens);
+        } else {
+          var searchAllergens = this.allAllergens
+            .filter((item) =>
+              item.name.toLowerCase().includes(searchStr.toLowerCase()),
+            )
+            .sort(function (a, b) {
+              return a.name.localeCompare(b.name);
+            });
+          this.set('allergens', searchAllergens);
         }
-        else {
-          var searchAllergens = this.get('allAllergens')
-            .filter(item => item.name.toLowerCase().includes(searchStr.toLowerCase()))
-            .sort(function(a,b) {return a.name.localeCompare(b.name); });
-            this.set('allergens', searchAllergens);
-        }
-      }
-      else {
-        if (this.get('favoriteFlag')) {
-          this.set('allergens', this.get('favoriteAllergens'));
-        }
-        else {
-          this.set('allergens', this.get('allAllergens'));
+      } else {
+        if (this.favoriteFlag) {
+          this.set('allergens', this.favoriteAllergens);
+        } else {
+          this.set('allergens', this.allAllergens);
         }
       }
     }, 250);
-  };
+  }
   // Поиск
 }

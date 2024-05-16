@@ -33,6 +33,19 @@ namespace Infrastructure.DataAccess.Repositories
             await _context.Pacients.AddAsync(pacientEntity);
             await _context.SaveChangesAsync();
         }
+        public async Task Add(Recipe recipe)
+        {
+            var recipeEntity = new Entities.Recipe()
+            {
+                Primarykey = recipe.Primarykey,
+                Name = recipe.Name,
+                Description = recipe.Description,
+                Rating = recipe.Rating,
+                Сalories = recipe.Сalories
+            };
+            await _context.Recipes.AddAsync(recipeEntity);
+            await _context.SaveChangesAsync();
+        }
         #endregion
 
         #region Pacient
@@ -149,7 +162,7 @@ namespace Infrastructure.DataAccess.Repositories
                 .AsNoTracking()
                 .ToListAsync();
             var recipes = recipeEntities
-                .Select(e => Recipe.CreateRecipe(e.Primarykey, e.Name, e.Сalories, e.Rating))
+                .Select(e => Recipe.CreateRecipe(e.Primarykey, e.Name, e.Description, e.Сalories, e.Rating))
                 .ToList();
             return recipes;
         }
@@ -169,7 +182,7 @@ namespace Infrastructure.DataAccess.Repositories
                 .ToListAsync();
 
             var recipes = recipeEntities
-                .Select(e => Recipe.CreateRecipe(e.Primarykey, e.Name, e.Сalories, e.Rating, true))
+                .Select(e => Recipe.CreateRecipe(e.Primarykey, e.Name, e.Description, e.Сalories, e.Rating, true))
                 .ToList();
 
             return recipes;
@@ -182,7 +195,7 @@ namespace Infrastructure.DataAccess.Repositories
                 .FirstOrDefaultAsync(p => p.Primarykey == primarykey);
             if (recipeEnity == null) { return null; }
 
-            var recipeModel = Recipe.CreateRecipe(recipeEnity.Primarykey, recipeEnity.Name,
+            var recipeModel = Recipe.CreateRecipe(recipeEnity.Primarykey, recipeEnity.Name, recipeEnity.Description,
                 recipeEnity.Сalories, recipeEnity.Rating);
             return recipeModel;
         }

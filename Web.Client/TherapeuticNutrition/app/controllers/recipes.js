@@ -17,16 +17,17 @@ export default class RecipesController extends Controller {
   searchStr = '';
   chosenRecipePrimarykey = null;
   chosenRecipe = null;
-  recipeImageUrl = 'https://www.ulfven.no/files/sculptor30/library/images/default-product-image.png'
+  recipeImageUrl =
+    'https://www.ulfven.no/files/sculptor30/library/images/default-product-image.png';
 
   // Default
   @action redirect(route) {
     this.router.transitionTo(route);
-  };
+  }
   @action changeChosenRecipe(recipe) {
     this.set('chosenRecipe', recipe);
     this.send('setRecipeImageUrl');
-  };
+  }
   // Default
 
   // Избранное
@@ -34,25 +35,27 @@ export default class RecipesController extends Controller {
     this.set('chosenRecipe.isFavorite', !recipe.isFavorite);
 
     // Избранное: фильтр
-    let favoriteRecipes = this.get('favoriteRecipes');
+    let favoriteRecipes = this.favoriteRecipes;
     if (recipe.isFavorite) {
       favoriteRecipes.push(recipe);
       this.set('favoriteRecipes', favoriteRecipes);
-    }
-    else {
-      favoriteRecipes = favoriteRecipes.filter(item => item !== recipe);
+    } else {
+      favoriteRecipes = favoriteRecipes.filter((item) => item !== recipe);
       this.set('favoriteRecipes', favoriteRecipes);
     }
-    if (this.get('favoriteFlag')) {
-      this.set('recipes', favoriteRecipes.sort(function(a,b){
-        return a.name.localeCompare(b.name);
-      }));
+    if (this.favoriteFlag) {
+      this.set(
+        'recipes',
+        favoriteRecipes.sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        }),
+      );
     }
 
     this.restApi
       .sendPostRequest(
         'pacient/change/type=Recipe&primarykey=' +
-        recipe.primarykey +
+          recipe.primarykey +
           '&isFavorite=' +
           recipe.isFavorite,
       )
@@ -62,63 +65,77 @@ export default class RecipesController extends Controller {
         },
         function (error) {
           console.log(error);
-        }
+        },
       );
-  };
+  }
   @action changeFavoriteFlag() {
-    var isFavorite = !this.get('favoriteFlag');
+    var isFavorite = !this.favoriteFlag;
     this.set('favoriteFlag', isFavorite);
 
     if (isFavorite) {
-      this.set('recipes', this.get('favoriteRecipes').sort(function(a,b){
-        return a.name.localeCompare(b.name);
-      }));
-    }
-    else {
-      this.set('recipes', this.get('allRecipes').sort(function(a,b){
-        return a.name.localeCompare(b.name);
-      }));
-    }
-
-    if (this.get('searchStr')) {
-      var searchRecipes = this.get('recipes')
-        .filter(item => item.name.toLowerCase().includes(this.get('searchStr').toLowerCase()))
-        .sort(function(a,b) {return a.name.localeCompare(b.name); });
-        this.set('recipes', searchRecipes);
+      this.set(
+        'recipes',
+        this.favoriteRecipes.sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        }),
+      );
+    } else {
+      this.set(
+        'recipes',
+        this.allRecipes.sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        }),
+      );
     }
 
-    this.send('changeChosenRecipe', this.get('recipes')[0]);
-  };
+    if (this.searchStr) {
+      var searchRecipes = this.recipes
+        .filter((item) =>
+          item.name.toLowerCase().includes(this.searchStr.toLowerCase()),
+        )
+        .sort(function (a, b) {
+          return a.name.localeCompare(b.name);
+        });
+      this.set('recipes', searchRecipes);
+    }
+
+    this.send('changeChosenRecipe', this.recipes[0]);
+  }
   // Избранное
 
   // Поиск
   @action changeSearchStr() {
     setTimeout(() => {
-      var searchStr = this.get('searchStr');
-      if (this.get('searchStr')) {
-        if (this.get('favoriteFlag')) {
-          var searchRecipes = this.get('favoriteRecipes')
-            .filter(item => item.name.toLowerCase().includes(searchStr.toLowerCase()))
-            .sort(function(a,b) {return a.name.localeCompare(b.name); });
-            this.set('recipes', searchRecipes);
+      var searchStr = this.searchStr;
+      if (this.searchStr) {
+        if (this.favoriteFlag) {
+          var searchRecipes = this.favoriteRecipes
+            .filter((item) =>
+              item.name.toLowerCase().includes(searchStr.toLowerCase()),
+            )
+            .sort(function (a, b) {
+              return a.name.localeCompare(b.name);
+            });
+          this.set('recipes', searchRecipes);
+        } else {
+          var searchRecipes = this.allRecipes
+            .filter((item) =>
+              item.name.toLowerCase().includes(searchStr.toLowerCase()),
+            )
+            .sort(function (a, b) {
+              return a.name.localeCompare(b.name);
+            });
+          this.set('recipes', searchRecipes);
         }
-        else {
-          var searchRecipes = this.get('allRecipes')
-            .filter(item => item.name.toLowerCase().includes(searchStr.toLowerCase()))
-            .sort(function(a,b) {return a.name.localeCompare(b.name); });
-            this.set('recipes', searchRecipes);
-        }
-      }
-      else {
-        if (this.get('favoriteFlag')) {
-          this.set('recipes', this.get('favoriteRecipes'));
-        }
-        else {
-          this.set('recipes', this.get('allRecipes'));
+      } else {
+        if (this.favoriteFlag) {
+          this.set('recipes', this.favoriteRecipes);
+        } else {
+          this.set('recipes', this.allRecipes);
         }
       }
     }, 250);
-  };
+  }
   // Поиск
 
   // Image
@@ -128,15 +145,22 @@ export default class RecipesController extends Controller {
     var chosenRecipe = _this.get('chosenRecipe');
     if (!chosenRecipe) return null;
 
-    this.restApi.sendGetRequest('https://localhost:7253/TherapeuticNutrition/get/image/relation=' + chosenRecipe.primarykey)
-    .then(
-      function (recipeImageUrl) {
-        _this.set('recipeImageUrl', recipeImageUrl);
-      },
-      function (reason) {
-        _this.set('recipeImageUrl', 'https://www.ulfven.no/files/sculptor30/library/images/default-product-image.png');
-      }
-    );
-  };
+    this.restApi
+      .sendGetRequest(
+        'https://localhost:7253/TherapeuticNutrition/get/image/relation=' +
+          chosenRecipe.primarykey,
+      )
+      .then(
+        function (recipeImageUrl) {
+          _this.set('recipeImageUrl', recipeImageUrl);
+        },
+        function (reason) {
+          _this.set(
+            'recipeImageUrl',
+            'https://www.ulfven.no/files/sculptor30/library/images/default-product-image.png',
+          );
+        },
+      );
+  }
   // Image
 }

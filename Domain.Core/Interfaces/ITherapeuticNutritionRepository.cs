@@ -5,7 +5,6 @@ namespace Domain.Core.Interfaces
     public interface ITherapeuticNutritionRepository
     {
         Task Add(Pacient pacient);
-
         Task<Pacient?> GetPacientByLogin(string login);
 
         Task<List<Allergen>> GetAllergens();
@@ -16,6 +15,7 @@ namespace Domain.Core.Interfaces
         Task<Product?> GetProductByPrimarykey(Guid primarykey);
         Task<List<Product>> GetFavoriteProducts(Guid pacientKey);
 
+        Task Add(Recipe recipe);
         Task<List<Recipe>> GetRecipes();
         Task<Recipe?> GetRecipeByPrimarykey(Guid primarykey);
         Task<List<Recipe>> GetFavoriteRecipes(Guid pacientKey);

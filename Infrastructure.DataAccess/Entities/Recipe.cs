@@ -8,6 +8,7 @@ namespace Infrastructure.DataAccess.Entities
         public Guid Primarykey { get; set; }
 
         public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public decimal Сalories { get; set; }
         public decimal Rating { get; set; }
     }
